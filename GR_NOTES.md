@@ -38,8 +38,9 @@ New build started
 Ran out of space again.
 
 Wed Feb 28 10:14:46 PST 2018
-Modified /etc/default/docker to set TMPDIR to /var/lib/docker/build_tmp ; created that.  Should give it plenty of space,
-and I'm on SSD so it shouldn't be way too slow.
+Modified /etc/default/docker to set TMPDIR to `/var/lib/docker/build_tmp`;
+created that. Should give it plenty of space, and I'm on SSD so it shouldn't be
+way too slow.
 
 Wed Feb 28 10:53:19 PST 2018
 Still building... standup slowed it down while on wifi.
@@ -56,7 +57,9 @@ ENVOY_DOCKER_BUILD_DIR=/var/lib/envoy ./ci/run_envoy_docker.sh './ci/do_ci.sh ba
 Thu Mar  1 18:50:20 PST 2018
 Forked Envoy to a ConsultingMD Github repo.
 Modified my upstream to point to that.
-Note that I followed *some* bit of instructions that set up a `pre-push` hook. That hook doesn't run on my Linux install at the moment
+Note that I followed the instructions in CONTRIBUTING.md and ran the
+`./support/bootstrap` script, which set up a `pre-push` hook. That hook doesn't
+run on my Linux install out of the box:
 
 ```
 Running pre-push check; to skip this step use 'push --no-verify'
@@ -65,4 +68,9 @@ Running pre-push check; to skip this step use 'push --no-verify'
 .git/hooks/pre-push: line 62: ./../../tools/check_format.py: No such file or directory
 ```
 
-Ignoring that for now. I presume I'll find a link in CONTRIBUTING.md to install the check_format script, and realpath is some MacOS thing that I'll have to clone.
+Ignoring that for now. I presume I'll find a link in CONTRIBUTING.md to install
+the `check_format` script, and realpath is some MacOS thing that I'll have to
+clone.
+
+I'm currently running everything from the docker image, so following
+support/README.md got me a way to run `check_format`. Will hand-modify pre-push to use it.
