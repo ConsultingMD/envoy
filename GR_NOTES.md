@@ -52,3 +52,17 @@ sudo mkdir /var/lib/envoy
 sudo chmod 777 !!$
 ENVOY_DOCKER_BUILD_DIR=/var/lib/envoy ./ci/run_envoy_docker.sh './ci/do_ci.sh bazel.release'
 ```
+
+Thu Mar  1 18:50:20 PST 2018
+Forked Envoy to a ConsultingMD Github repo.
+Modified my upstream to point to that.
+Note that I followed *some* bit of instructions that set up a `pre-push` hook. That hook doesn't run on my Linux install at the moment
+
+```
+Running pre-push check; to skip this step use 'push --no-verify'
+.git/hooks/pre-push: line 53: realpath: command not found
+  Checking format for GR_NOTES.md
+.git/hooks/pre-push: line 62: ./../../tools/check_format.py: No such file or directory
+```
+
+Ignoring that for now. I presume I'll find a link in CONTRIBUTING.md to install the check_format script, and realpath is some MacOS thing that I'll have to clone.
