@@ -74,3 +74,6 @@ clone.
 
 I'm currently running everything from the docker image, so following
 support/README.md got me a way to run `check_format`. Will hand-modify pre-push to use it.
+
+Mon Mar  5 10:29:25 PST 2018
+WACK  A  MOLE
