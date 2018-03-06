@@ -76,4 +76,50 @@ I'm currently running everything from the docker image, so following
 support/README.md got me a way to run `check_format`. Will hand-modify pre-push to use it.
 
 Mon Mar  5 10:29:25 PST 2018
-WACK  A  MOLE
+Having trouble figuring out how to build the sample filter from inside the docker
+container, so I decided to set up for native development.
+
+Followed instructions in https://github.com/envoyproxy/envoy/blob/master/bazel/README.md#quick-start-bazel-build-for-developers
+Had to add the repository and key for llvm:
+
+```
+wget -O - https://apt.llvm.org/llvm-snapshot.gpg.key|sudo apt-key add -
+```
+and added `/etc/apt/sources.list.d/llvm.list` with
+
+```
+deb http://apt.llvm.org/trusty/ llvm-toolchain-trusty-5.0 main
+deb-src http://apt.llvm.org/trusty/ llvm-toolchain-trusty-5.0 main
+```
+
+After `sudo apt-get update` I was finally able to `sudo apt-get install clang-format-5.0`
+
+Also had to install `golang`
+
+And then upgrade my g++ to support c++14. That ended up being:
+
+```
+  sudo add-apt-repository ppa:ubuntu-toolchain-r/test
+  sudo apt-get update
+  sudo apt-get install g\+\+-5
+  sudo apt-get install gcc-4.8 g++-4.8
+  sudo update-alternatives --install /usr/bin/gcc gcc /usr/bin/gcc-5 60 --slave /usr/bin/g++ g++ /usr/bin/g++-5
+  sudo update-alternatives --install /usr/bin/gcc gcc /usr/bin/gcc-4.8 60 --slave /usr/bin/g++ g++ /usr/bin/g++-4.8
+```
+
+so now I can switch back & forth using:
+
+```
+  sudo update-alternatives --config gcc
+```
+
+After *that*, I could go back to the build instructions and start with the
+`bazel fetch //source/...` line.
+
+Mon Mar  5 18:01:07 PST 2018
+
+Once I was able to get that working I went on to build the envoy-filter-example
+directory. Note that bazel doesn't cache much for you between the two
+directories; it'll take the full 10m to compile & link the example filter the
+first time. Afterwards, it's a bit faster, but it still takes about 30s to test
+a one line change in the example http filter for me.
